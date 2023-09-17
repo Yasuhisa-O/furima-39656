@@ -71,7 +71,7 @@ Things you may want to cover:
 | category_id        | integer    | null: false                    |
 | condition_id       | integer    | null: false                    |
 | delivery_charge_id | integer    | null: false                    |
-| shipping_area_id   | integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | shipping_time_id   | integer    | null: false                    |
 | price              | integer    | null: false                    |
 
@@ -79,7 +79,6 @@ Things you may want to cover:
 
 - belongs_to :user
 - has_one :order
-- has_one_attached :image
 
 ## orders テーブル
 
