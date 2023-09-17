@@ -25,35 +25,36 @@ Things you may want to cover:
 
 # テーブル設計
 
-## user テーブル
+## users テーブル
 
-| Column           | Type   | Options     |
-| ---------------- | ------ | ----------- |
-| nickname         | string | null: false |
-| email            | string | null: false |
-|encrypted_password| string | null: false |
-| family_name      | string | null: false |
-| first_name       | string | null: false |
-| family_name_kana | string | null: false |
-| first_name_kana  | string | null: false |
-| birth_day        | date   | null: false |
+| Column           | Type       | Options                        |
+| ---------------- | ---------- | ------------------------------ |
+| nickname         | string     | null: false                    |
+| email            | string     | null: false,unique: true       |
+|encrypted_password| string     | null: false                    |
+| last_name        | string     | null: false                    |
+| first_name       | string     | null: false                    |
+| last_name_kana   | string     | null: false                    |
+| first_name_kana  | string     | null: false                    |
+| birth_day        | date       | null: false                    |
 
 ### Association
 
 - has_many :items dependent: :destroy
-- has_one :order dependent: :destroy
-- belongs_to :card dependent: :destroy
+- has_one :address dependent: :destroy
+- has_many :orders dependent: :destroy
 
 
-## delivery_address テーブル
+## addresses テーブル
 
 | ---------------- | ---------- | ------------------------------ |
 | user_id          | references | null: false, foreign_key: true |
 | destination_name | string     | null: false                    |
 | postal_code      | string     | null: false                    |
 | prefecture       | string     | null: false                    |
-| address1         | text       | null: false                    |
-| address2         | text       |                                |
+| city             | string     | null: false                    |
+| address          | string     | null: false                    |
+| building_name    | string     |                                |
 | tel_number       | string     | null: false                    |
 
 ### Association
@@ -61,38 +62,28 @@ Things you may want to cover:
 - belongs_to :user
 
 
-## card(pay.jp) テーブル
-
-| Column      | Type       | Options                        |
-| ----------- | ---------- | ------------------------------ |
-| user_id     | references | null: false, foreign_key: true |
-| customer_id | string     | null: false                    |
-| card_id     | string     | null: false                    |
-
-### Association
-
-- belongs_to :user
-
-
-## item テーブル
+## items テーブル
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
 | user_id          | references | null: false, foreign_key: true |
 | name             | string     | null: false                    |
 | description      | text       | null: false                    |
-| price            | string     | null: false                    |
+| category         | string     | null: false                    |
 | condition        | string     | null: false                    |
-| category_id      | references | null: false, foreign_key: true |
+| delivery_charge  | string     | null: false                    |
+| shipping_area    | string     | null: false                    |
+| shipping_time    | string     | null: false                    |
+| price            | string     | null: false                    |
 
 ### Association
 
 - belongs_to :user
 - has_many :images dependent: :destroy
-- belongs_to :category
+- has_one :order
 
 
-## image テーブル
+## images テーブル
 
 | Column      | Type       | Options                        |
 | ----------- | ---------- | ------------------------------ |
@@ -104,16 +95,17 @@ Things you may want to cover:
 - belongs_to :item
 
 
-## category テーブル
+## orders テーブル
 
-| Column      | Type       | Options                        |
-| ----------- | ---------- | ------------------------------ |
-| item_id     | references | null: false, foreign_key: true |
-|category_name| string     | null: false                    |
+| Column            | Type       | Options                        |
+| ----------------- | ---------- | ------------------------------ |
+| purchaser_user_id | references | null: false, foreign_key: true |
+| item_id           | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_many :item
+- belongs_to :user
+- belongs_to :item
 
 <!-- ## comments テーブル
 
