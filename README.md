@@ -73,32 +73,19 @@ Things you may want to cover:
 | delivery_charge_id | integer    | null: false                    |
 | shipping_area_id   | integer    | null: false                    |
 | shipping_time_id   | integer    | null: false                    |
-| price              | string     | null: false                    |
+| price              | integer    | null: false                    |
 
 ### Association
 
 - belongs_to :user
-- has_many :images
 - has_one :order
-
-
-## images テーブル
-
-| Column      | Type       | Options                        |
-| ----------- | ---------- | ------------------------------ |
-| item        | references | null: false, foreign_key: true |
-| image       | string     | null: false                    |
-
-### Association
-
-- belongs_to :item
-
+- has_one_attached :image
 
 ## orders テーブル
 
 | Column            | Type       | Options                        |
 | ----------------- | ---------- | ------------------------------ |
-| seller_user       | references | null: false, foreign_key: true |
+| user              | references | null: false, foreign_key: true |
 | item              | references | null: false, foreign_key: true |
 
 ### Association
