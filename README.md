@@ -48,7 +48,6 @@ Things you may want to cover:
 
 | ---------------- | ---------- | ------------------------------ |
 | order            | references | null: false, foreign_key: true |
-| destination_name | string     | null: false                    |
 | postal_code      | string     | null: false                    |
 | prefecture_id    | integer    | null: false                    |
 | city             | string     | null: false                    |
