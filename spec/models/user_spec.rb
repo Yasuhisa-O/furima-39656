@@ -15,17 +15,15 @@ RSpec.describe User, type: :model do
 
     context 'ユーザー新規登録' do
       it 'nicknameが空では登録できない' do
-        user = FactoryBot.build(:user)
-        user.nickname = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Nickname can't be blank")
+        @user.nickname = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Nickname can't be blank")
       end
 
       it 'メールアドレスが必須であること' do
-        user = FactoryBot.build(:user)
-        user.email = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Email can't be blank")
+        @user.email = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email can't be blank")
       end
 
       it 'メールアドレスが一意性であること' do
@@ -37,104 +35,104 @@ RSpec.describe User, type: :model do
       end
 
       it 'メールアドレスは、@を含む必要があること' do
-        user = FactoryBot.build(:user)
-        user.email = 'test'
-        user.valid?
-        expect(user.errors.full_messages).to include("Email is invalid")
+        @user.email = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
 
       it 'パスワードが必須であること' do
-        user = FactoryBot.build(:user)
-        user.password = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Password can't be blank")
+        @user.password = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be blank")
       end
 
       it ' パスワードは、6文字以上での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.password = 'test0'
-        user.password_confirmation = 'test0'
-        user.valid?
-        expect(user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+        @user.password = 'test0'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
       end
 
-      it 'パスワードは、半角英数字混合での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.password = '000000'
-        user.password_confirmation = '000000'
-        user.valid?
-        expect(user.errors.full_messages).to include("Password is invalid")
+      it 'パスワードは、半角英数字混合での入力が必須であること(英字のみのパスワードでは登録できない)' do
+        @user.password = 'testaa'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'パスワードは、半角英数字混合での入力が必須であること(数字のみのパスワードでは登録できない)' do
+        @user.password = '000000'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'パスワードは、半角英数字混合での入力が必須であること(全角文字を含むパスワードでは登録できない)' do
+        @user.password = 'てすと000'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
 
       it 'パスワードとパスワード（確認）は、値の一致が必須であること' do
-        user = FactoryBot.build(:user)
-        user.password = 'test00'
-        user.password_confirmation = 'test01'
-        user.valid?
-        expect(user.errors.full_messages).to include("Password confirmation doesn't match Password")
+        @user.password = 'test00'
+        @user.password_confirmation = 'test01'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
 
       it 'お名前(全角)は、名前が必須であること' do
-        user = FactoryBot.build(:user)
-        user.first_name = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("First name can't be blank")
+        @user.first_name = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name can't be blank")
       end
 
       it 'お名前(全角)は、名字が必須であること' do
-        user = FactoryBot.build(:user)
-        user.last_name = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Last name can't be blank")
+        @user.last_name = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name can't be blank")
       end
 
       it 'お名前(全角)の名前は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.first_name = 'test'
-        user.valid?
-        expect(user.errors.full_messages).to include("First name is invalid")
+        @user.first_name = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name is invalid")
       end
 
       it 'お名前(全角)の名字は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.last_name = 'test'
-        user.valid?
-        expect(user.errors.full_messages).to include("Last name is invalid")
+        @user.last_name = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name is invalid")
       end
 
       it 'お名前カナ(全角)は、名前が必須であること' do
-        user = FactoryBot.build(:user)
-        user.first_name_kana = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("First name kana can't be blank")
+        @user.first_name_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana can't be blank")
       end
 
       it 'お名前カナ(全角)は、名字が必須であること' do
-        user = FactoryBot.build(:user)
-        user.last_name_kana = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Last name kana can't be blank")
+        @user.last_name_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name kana can't be blank")
       end
 
       it 'お名前カナ(全角)の名前は、全角（カタカナ）での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.first_name_kana = 'test'
-        user.valid?
-        expect(user.errors.full_messages).to include("First name kana is invalid")
+        @user.first_name_kana = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana is invalid")
       end
 
       it 'お名前カナ(全角)の名字は、全角（カタカナ）での入力が必須であること' do
-        user = FactoryBot.build(:user)
-        user.last_name_kana = 'test'
-        user.valid?
-        expect(user.errors.full_messages).to include("Last name kana is invalid")
+        @user.last_name_kana = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name kana is invalid")
       end
 
       it '生年月日が必須であること' do
-        user = FactoryBot.build(:user)
-        user.birth_day = ''
-        user.valid?
-        expect(user.errors.full_messages).to include("Birth day can't be blank")
+        @user.birth_day = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birth day can't be blank")
       end
     end
   end
