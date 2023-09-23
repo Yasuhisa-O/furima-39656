@@ -7,10 +7,11 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.create(item_params)
-    if item.save
+    @item = Item.new(item_params)
+    if @item.save
       redirect_to root_path
       else
+        # binding.pry
         render :new, status: :unprocessable_entity
     end
   end
