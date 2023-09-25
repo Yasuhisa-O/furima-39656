@@ -11,7 +11,7 @@ class Item < ApplicationRecord
 
   validates :name        , presence: true
   validates :description , presence: true
-  validates :price       , presence: true ,numericality: {greater_than: 300,less_than: 10000000}
+  validates :price       , presence: true ,numericality: {only_integer: true, greater_than: 299, less_than: 10000000}
   validates :image       , presence: true
 
   validates :category_id        , numericality: { other_than: 1 , message: "can't be blank"}

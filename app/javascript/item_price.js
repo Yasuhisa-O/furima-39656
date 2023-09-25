@@ -2,7 +2,6 @@ const priceInput = document.getElementById("item-price");
 priceInput.addEventListener("input", () => {
   const inputValue = priceInput.value;
   const tax = 0.1;
-  console.log(inputValue);
 
   const addTaxDom = document.getElementById("add-tax-price");
   addTaxDom.innerHTML = `${(inputValue * tax).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
