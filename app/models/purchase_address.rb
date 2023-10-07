@@ -1,4 +1,4 @@
-class DonationAddress
+class PurchaseAddress
   include ActiveModel::Model
   attr_accessor :postal_code, :prefecture_id, :city, :address, :building_name, :tel_number, :user_id, :item_id, :token
 
