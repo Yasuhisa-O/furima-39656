@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :sold
 
   def index
@@ -19,7 +20,7 @@ class OrdersController < ApplicationController
   private
 
   def purchase_params
-    params.require(:purchase_address).permit(:post_code, :city, :address, :building_name, :tel_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
+    params.require(:purchase_address).permit(:postal_code, :prefecture_id, :city, :address, :building_name, :tel_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
   def sold
@@ -33,7 +34,7 @@ class OrdersController < ApplicationController
     Payjp.api_key = Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
-      card: order_params[:token],
+      card: params[:token],
       currency: 'jpy'
     )
   end
