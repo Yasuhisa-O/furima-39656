@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   before_action :items_user
 
   def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @purchase_address = PurchaseAddress.new
   end
 
