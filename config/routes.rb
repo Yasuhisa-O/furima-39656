@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
 
   root to: "items#index"
-  resources :items
+  resources :items do
+    resources :orders
+  end
 
 end
