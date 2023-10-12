@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   before_action :items_user
 
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @purchase_address = PurchaseAddress.new
   end
 
@@ -12,6 +11,7 @@ class OrdersController < ApplicationController
     @purchase_address = PurchaseAddress.new(purchase_params)
     if @purchase_address.valid?
       pay_item
+      binding.pry
       @purchase_address.save
       redirect_to root_path
     else
@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
       card: params[:token],
