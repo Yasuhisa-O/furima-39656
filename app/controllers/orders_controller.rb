@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   before_action :items_user
 
   def index
+    @publicKey = ENV["PAYJP_PUBLIC_KEY"]
     @purchase_address = PurchaseAddress.new
   end
 
@@ -11,10 +12,10 @@ class OrdersController < ApplicationController
     @purchase_address = PurchaseAddress.new(purchase_params)
     if @purchase_address.valid?
       pay_item
-      binding.pry
       @purchase_address.save
       redirect_to root_path
     else
+      @publicKey = ENV["PAYJP_PUBLIC_KEY"]
       render :index, status: :unprocessable_entity
     end
   end

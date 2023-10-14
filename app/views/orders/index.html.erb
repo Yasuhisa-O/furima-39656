@@ -3,6 +3,7 @@
  <% content_for :js do %>
    <%= javascript_import_module_tag "controllers/card" %>
  <% end %>
+ <input type="hidden" id="publicKey" value="<%= @publicKey %>">
 
 <div class='transaction-contents'>
   <div class='transaction-main'>
